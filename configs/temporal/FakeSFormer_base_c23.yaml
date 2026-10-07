@@ -7,7 +7,7 @@ DATA_RELOAD: True
 DATASET:
   type: FakeSFormerSBI
   DATA_TYPE: video
-  TRAIN: True #Switch to True for training mode, False for testing mode
+  TRAIN: False #Switch to True for training mode, False for testing mode
   COMPRESSION: c23
   IMAGE_SUFFIX: png
   NUM_WORKERS: 32
@@ -32,7 +32,7 @@ DATASET:
       # ROOT: /home/users/XXX/data/FaceForensics++/c0/
       ROOT: /project/home/p200249/XXX/FaceForensics++/c23/
       # ROOT: /data/deepfake_cluster/datasets_df/FaceForensics++/c0/
-      FROM_FILE: True
+      # FROM_FILE: True
       FAKETYPE: [Deepfakes, Face2Face, FaceSwap, NeuralTextures]
       # ANNO_FILE: train/frames/FaceXRay/train_FF_FaceXRay.json
       ANNO_FILE: processed_data/c23/train_FaceForensics_videos_81.json
@@ -49,6 +49,7 @@ DATASET:
       LABEL_FOLDER: [real, fake]
     TEST:
       NAME: Celeb-DFv2
+      FROM_FILE: False
       # ROOT: /home/users/XXX/data/FaceForensics++/c0/
       # ROOT: /project/home/p200249/XXX/FaceForensics++/c23/
       # ROOT: /home/users/XXX/data/Celeb-DFv1/
@@ -66,7 +67,7 @@ DATASET:
       # ROOT: /project/home/p200249/XXX/DFW/
       # ROOT: /project/home/p200249/XXX/DeeperForensics/
       # ROOT: /project/home/p200249/XXX/DiffSwap/
-      FROM_FILE: False
+      # FROM_FILE: False
       # FAKETYPE: [original, Deepfakes]
       # FAKETYPE: [frames_BW_5/original, frames_BW_5/Deepfakes, frames_BW_5/Face2Face, frames_BW_5/FaceSwap, frames_BW_5/NeuralTextures]
       FAKETYPE: [Celeb-real, Celeb-synthesis, YouTube-real]
@@ -149,7 +150,7 @@ MODEL:
     features: 3D
     avg_pool: False
   INIT_WEIGHTS:
-    pretrained: pretrained/mae_pretrain_vit_base.pth
+    pretrained: /Users/krishnaaggarwal_sonoma/Downloads/ahfoiah.pth
 
 TRAIN:
   gpus: [0,1,2,3]
@@ -193,7 +194,7 @@ TRAIN:
 
 TEST:
   gpus: [0]
-  subtask: 'eval'
+  subtask: 'test_vid'
   test_file: ''
   vis_hm: True
   threshold: 0.5
@@ -203,4 +204,4 @@ TEST:
   no_shot_preds: 1
   pred_file: /project/home/p200249/XXX/saved_predictions/fakestormer_DF40_90_10.json # File to save predictions
   save_preds: False
-  pretrained: 'logs/20-10-2024_FakeSTomer_gassian_abl/TopDownDetector_C23_ViTBase224_ST_hm100_tempLOC0.2_4SBI_SAM_mp0.01_temp2_0vidAug_0.35_temp_normlms_gaussian_abl_model_best.pth'
+  pretrained: '/Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth'

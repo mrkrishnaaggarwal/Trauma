@@ -1,0 +1,108 @@
+Flip Test is used --- False
+Turning on evaluation mode...
+Flip Test is used --- False
+Turning on evaluation mode...
+Loading weight ... logs/20-10-2024_FakeSTomer_gassian_abl/TopDownDetector_C23_ViTBase224_ST_hm100_tempLOC0.2_4SBI_SAM_mp0.01_temp2_0vidAug_0.35_temp_normlms_gaussian_abl_model_best.pth
+Flip Test is used --- False
+Turning on evaluation mode...
+Loading weight ... logs/20-10-2024_FakeSTomer_gassian_abl/TopDownDetector_C23_ViTBase224_ST_hm100_tempLOC0.2_4SBI_SAM_mp0.01_temp2_0vidAug_0.35_temp_normlms_gaussian_abl_model_best.pth
+Flip Test is used --- False
+Turning on evaluation mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Flip Test is used --- False
+Turning on evaluation mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Using metric-base binary for evaluation!
+Video level evaluation mode: True
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.1901562213897705
+Real --- [0.45637655 0.46550837 0.45502165 0.4624963 ]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.2520020008087158
+Real --- classification score: 0.396324
+Temporal localization scores --- [0.45637655 0.46550837 0.45502165 0.4624963 ]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.18025803565979004
+Real --- classification score: 0.288965
+Temporal localization scores --- [0.37481633 0.3792776  0.37259772 0.37867346]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.21647310256958008
+Real --- classification score: 0.034957
+Temporal localization scores --- [0.05446286 0.05437982 0.05397481 0.05243416]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.22615981101989746
+Real --- classification score: 0.076904
+Temporal localization scores --- [0.05876    0.05823304 0.05833896 0.05704305]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.22169113159179688
+Real --- classification score: 0.144494
+Temporal localization scores --- [0.05673032 0.05599296 0.05781933 0.05708467]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.2015819549560547
+Real --- [0.1797527  0.20778665 0.21203727 0.22859976]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.18278908729553223
+Real --- [0.07568882 0.07753742 0.08198518 0.08212984]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.21410822868347168
+Real --- [0.30552986 0.32100177 0.34739596 0.372558  ]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.1880640983581543
+Real --- [0.07453711 0.07642103 0.08074639 0.0811    ]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.19474101066589355
+Real --- [0.1053509  0.11874614 0.12256572 0.12985654]
+-----------------***--------------------
+Flip Test is used --- False
+Turning on single video test mode...
+Loading weight ... /Users/krishnaaggarwal_sonoma/Documents/Desktop Copy/Mac/Final SEM P/model_best.pth
+Inferencing time --- 0.1959381103515625
+Real --- [0.1053509  0.11874614 0.12256572 0.12985654]
+-----------------***--------------------

@@ -34,18 +34,23 @@ def vis_heatmap(images, heatmaps, file_name, **kwargs):
         heatmap = heatmaps[i]
         heatmap = np.clip(heatmap*255, 0, 255).astype(np.uint8)
         heatmap = np.squeeze(heatmap)
+        if heatmap.ndim > 2:
+            heatmap = heatmap[0]
         
         # heatmap_h = heatmap.shape[0]
         # heatmap_w = heatmap.shape[1]
         
         if isinstance(images, list):
             # resized_image = cv2.resize(np.array(images[i]), (int(heatmap_h), int(heatmap_w)))
-            heatmap = cv2.resize(heatmap, np.array(images[i]).shape[:2], interpolation=cv2.INTER_LINEAR)
+            image_shape = np.array(images[i]).shape[:2]
+            heatmap = cv2.resize(heatmap, (image_shape[1], image_shape[0]), interpolation=cv2.INTER_LINEAR)
+            heatmap = np.ascontiguousarray(heatmap, dtype=np.uint8)
             colored_heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
             masked_image[:, hm_w*i:hm_w*(i+1), :] = colored_heatmap*0.7 + np.array(images[i])*0.3
         else:
             # resized_image = cv2.resize(images, (int(heatmap_h), int(heatmap_w)))
-            heatmap = cv2.resize(heatmap, images.shape[:2], interpolation=cv2.INTER_LINEAR)
+            heatmap = cv2.resize(heatmap, (images.shape[1], images.shape[0]), interpolation=cv2.INTER_LINEAR)
+            heatmap = np.ascontiguousarray(heatmap, dtype=np.uint8)
             colored_heatmap = cv2.applyColorMap(heatmap, cv2.COLORMAP_JET)
             masked_image[:, hm_w*i:hm_w*(i+1), :] = colored_heatmap*0.7 + images*0.3
         

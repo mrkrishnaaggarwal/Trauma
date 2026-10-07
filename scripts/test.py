@@ -62,7 +62,8 @@ if __name__=='__main__':
     random.seed(seed)
     torch.manual_seed(seed)
     np.random.seed(seed)
-    torch.cuda.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
 
     task = cfg.TEST.subtask
     flip_test = cfg.TEST.flip_test
@@ -85,6 +86,12 @@ if __name__=='__main__':
         assert len(cfg.DATASET.DATA.TEST.ANNO_FILE), "Annotation file can not be empty with evaluation test mode!"
         # assert os.access(cfg.DATASET.DATA.TEST.ANNO_FILE, os.R_OK), "Annotation file must be valid with evaluation test mode!"
     device_count = torch.cuda.device_count()
+    if device_count >= 1:
+        device = torch.device('cuda')
+    elif hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+        device = torch.device('mps')
+    else:
+        device = torch.device('cpu')
     
     # build and load/initiate pretrained model
     model = build_model(cfg.MODEL, MODELS).to(torch.float)
@@ -94,7 +101,7 @@ if __name__=='__main__':
     if device_count >= 1:
         model = nn.DataParallel(model, device_ids=cfg.TEST.gpus).cuda()
     else:
-        model = model.cuda()
+        model = model.to(device)
     
     # Define essential variables
     image = args.image
@@ -126,7 +133,7 @@ if __name__=='__main__':
             img_trans = transforms(input/255).to(torch.float)
             img_trans = torch.unsqueeze(img_trans, 0)
             if device_count > 0:
-                img_trans = img_trans.cuda(non_blocking=True)
+                img_trans = img_trans.to(device, non_blocking=True)
             
             outputs = model(img_trans)
             hm_outputs = outputs[0]['hm']
@@ -146,23 +153,52 @@ if __name__=='__main__':
         n_frames = cfg.DATASET.DATA.SAMPLES_PER_VIDEO.NUM_FRAMES
         assert n_frames is not None, 'Number of video frames can not be None!'
         # Load first n_frames inside the video
-        img_paths = glob(f'{args.video}/*.png')
-        img_paths = natsorted(img_paths) # correct the order of image paths
-        img_paths = img_paths[:n_frames]
-        for img_path in img_paths:
-            img = Image.open(img_path)
-            H, W = img.size
-            img = img.crop((15, 15, W-15, H-15))
-            img_list.append(img)
+        # img_paths = glob(f'{args.video}/*.png')
+        # img_paths = natsorted(img_paths) # correct the order of image paths
+        # img_paths = img_paths[:n_frames]
+        # for img_path in img_paths:
+        #     img = Image.open(img_path)
+        #     H, W = img.size
+        #     img = img.crop((15, 15, W-15, H-15))
+        #     img_list.append(img)
+        
+
+        # Check if the input is a raw video file or a folder of frames
+        if os.path.isfile(args.video):
+            cap = cv2.VideoCapture(args.video)
+            for _ in range(n_frames):
+                ret, frame = cap.read()
+                if not ret: 
+                    break
+                # OpenCV uses BGR, PIL expects RGB
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                img = Image.fromarray(frame)
+                H, W = img.size
+                img = img.crop((15, 15, W-15, H-15))
+                img_list.append(img)
+            cap.release()
+        else:
+            # Load first n_frames inside the directory
+            img_paths = glob(f'{args.video}/*.png')
+            img_paths = natsorted(img_paths) # correct the order of image paths
+            img_paths = img_paths[:n_frames]
+            for img_path in img_paths:
+                img = Image.open(img_path)
+                H, W = img.size
+                img = img.crop((15, 15, W-15, H-15))
+                img_list.append(img)
+                
+        # Guardrail: Prevent the script from crashing if no frames were found
+        if not img_list:
+            raise ValueError(f"Could not load any frames from {args.video}. Please verify the path.")
         
         # Transform images
-        transformed_imgs = torch.tensor([]).cuda()
+        transformed_imgs = torch.tensor([], device=device)
         for _i in img_list:
             img_resize = _i.resize((int(cfg.DATASET.IMAGE_SIZE[0]), int(cfg.DATASET.IMAGE_SIZE[1])))
             img_resize = np.array(img_resize)/255
             img_tensor = transforms(img_resize).to(torch.float)
-            if device_count > 0:
-                img_tensor = img_tensor.cuda(non_blocking=True)
+            img_tensor = img_tensor.to(device, non_blocking=device.type == 'cuda')
             transformed_imgs = torch.cat((transformed_imgs, img_tensor.unsqueeze(0)), 0)
         
         with torch.no_grad():
@@ -202,8 +238,8 @@ if __name__=='__main__':
         test_dataloader = tqdm(test_dataloader, dynamic_ncols=True)
         with torch.no_grad():
             # Make sure all tensors in same device
-            total_preds = torch.tensor([]).cuda().to(dtype=torch.float)
-            total_labels = torch.tensor([]).cuda().to(dtype=torch.float)
+            total_preds = torch.tensor([], device=device).to(dtype=torch.float)
+            total_labels = torch.tensor([], device=device).to(dtype=torch.float)
             vid_preds = {}
             vid_labels = {}
 
@@ -224,8 +260,8 @@ if __name__=='__main__':
                     if save_preds: raise ValueError('There is no img or vid data for saving!')
 
                 if device_count > 0:
-                    inputs = inputs.to(dtype=torch.float).cuda()
-                    labels = labels.to(dtype=torch.float).cuda()
+                    inputs = inputs.to(device=device, dtype=torch.float)
+                    labels = labels.to(device=device, dtype=torch.float)
 
                 for i_shot in range(no_shot_preds): # multi-shot predictions
                     logger.info(f'Running the {i_shot} shot of predictions')

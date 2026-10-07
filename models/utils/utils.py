@@ -87,7 +87,7 @@ def load_pretrained(model, weight_path):
     This function only care about state dict of model
     For other modules such as optimizer, resume learning, please refer @load_model
     '''
-    state_dict = torch.load(weight_path)['state_dict']
+    state_dict = torch.load(weight_path, map_location='cpu')['state_dict']
     model.load_state_dict(state_dict, strict=True)
     return model
 
